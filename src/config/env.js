@@ -2,18 +2,32 @@ require("dotenv").config();
 
 const need = (k, d) => {
   const v =
-    process.env[k] !== undefined && process.env[k] !== "" ? process.env[k] : d;
-  if (v === undefined) throw new Error(`Falta la variable de entorno ${k}`);
+    process.env[k] !== undefined && process.env[k] !== ""
+      ? process.env[k]
+      : d;
+
+  if (v === undefined) {
+    throw new Error(`Falta la variable de entorno ${k}`);
+  }
+
   return v;
 };
+
+const sslValue = need("DB_SSL", "true").toLowerCase();
+
+if (!["true", "false"].includes(sslValue)) {
+  throw new Error("DB_SSL debe ser true o false");
+}
 
 module.exports = {
   env: need("NODE_ENV", "development"),
   port: Number(need("PORT", "3000")),
   corsOrigin: need("CORS_ORIGIN", "*"),
 
-  // URL utilizada para generar los códigos QR
-  publicBaseUrl: need("PUBLIC_BASE_URL", "http://192.168.1.8:3000"),
+  publicBaseUrl: need(
+    "PUBLIC_BASE_URL",
+    "http://192.168.1.8:3000"
+  ),
 
   db: {
     host: need("DB_HOST", "localhost"),
@@ -21,9 +35,10 @@ module.exports = {
     user: need("DB_USER", "root"),
     password: need("DB_PASSWORD", ""),
     database: need("DB_NAME", "siga_mvp"),
-    sslCa: process.env.DB_SSLCa,
-    ssl: need("DB_SSL", "true") !== "false",
+    sslCa: process.env.DB_SSL_CA,
+    ssl: sslValue === "true",
   },
+
   jwt: {
     secret: need("JWT_SECRET"),
     expiresIn: need("JWT_EXPIRES_IN", "8h"),

@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # Dependencias
 node_modules/
 
@@ -72,12 +72,12 @@ web_modules/
 .yarn-integrity
 
 # dotenv environment variable files
->>>>>>> c9e5b3f26c93d9e9c2ee309c83c7918776f7e605
+
 .env
 .env.*
 !.env.example
 
-<<<<<<< HEAD
+
 # Archivos de logs
 *.log
 npm-debug.log*
@@ -172,4 +172,6 @@ vite.config.ts.timestamp-*
 
 # Turbo Repo
 .turbo
->>>>>>> c9e5b3f26c93d9e9c2ee309c83c7918776f7e605
+
+# Cobertura de pruebas
+test/
